@@ -1,5 +1,7 @@
 # cogenial-disco
 
+- /resume memcts
+
 A CI/CD Agentic Memory Remediation System. When a pipeline fails, this framework retrieves past solutions from a vector memory store, attempts automated remediation, and consolidates new solutions into long-term memory — getting smarter with every incident it resolves.
 
 ## How it works
