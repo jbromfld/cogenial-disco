@@ -1,0 +1,24 @@
+[project]
+name = "cogenial-disco"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "psycopg2-binary",
+    "pgvector",
+    "pydantic-settings",
+    "sentence-transformers",
+    "openai",
+    "anthropic",
+    "langchain",
+    "langchain-anthropic",
+    "langchain-openai",
+    "langgraph",
+    "langsmith",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.backends.legacy:build"

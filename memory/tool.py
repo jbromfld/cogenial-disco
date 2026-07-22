@@ -1,31 +1,33 @@
 import psycopg2
 from psycopg2.extras import Json
 
+from config import settings
+
+
 def upsert_agent_memory(
-    db_connection, 
-    primary_abstraction: str, 
-    primary_embedding: list[float], 
-    new_memory_value: dict, 
-    new_cue_anchors: list[str]
+    db_connection,
+    primary_abstraction: str,
+    primary_embedding: list[float],
+    new_memory_value: dict,
+    new_cue_anchors: list[str],
 ) -> dict:
     """
-    MCP Tool: Processes a new memory by checking for semantic similarity against 
+    MCP Tool: Processes a new memory by checking for semantic similarity against
     existing memory structures. Updates if a match is found; inserts otherwise.
-    
+
     Args:
         db_connection: Active psycopg2 database connection.
         primary_abstraction (str): The summary concept (e.g., "Project Timeline").
-        primary_embedding (list[float]): The 1536-dim vector of the abstraction.
+        primary_embedding (list[float]): Vector of the abstraction (dim set by EMBEDDING_DIM).
         new_memory_value (dict): The raw, detailed memory to store.
         new_cue_anchors (list[str]): Semantic hooks (e.g., ["Jane", "hiking"]).
-        
+
     Returns:
         dict: A status payload indicating if a record was updated or inserted.
     """
-    
-    # Cosine distance in pgvector is calculated as (1 - cosine_similarity).
-    # A similarity threshold of 0.80 means we look for a distance < 0.20.
-    SIMILARITY_DISTANCE_THRESHOLD = 0.20 
+
+    # Cosine distance = 1 - cosine_similarity. Threshold driven by MEMORY_SIMILARITY_THRESHOLD.
+    SIMILARITY_DISTANCE_THRESHOLD = 1.0 - settings.MEMORY_SIMILARITY_THRESHOLD
     
     try:
         with db_connection.cursor() as cursor:
