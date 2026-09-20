@@ -27,8 +27,8 @@ Two design patterns drive this system:
 - `cue_anchors` — metadata tags for fast filtering (e.g. `["repo:frontend", "stage:build"]`)
 
 **CaMeL** (dual-LLM) — separates concerns between two agents:
-- **P-Agent** (ReAct, Anthropic) — orchestrates the full flow: search, fix, commit
-- **Q-Agent** (structured output, Anthropic) — sandboxed judge that returns `{"action": "INSERT"|"UPDATE", "merged_content": "..."}`
+- **P-Agent (Privileged)** (ReAct, Anthropic) — orchestrates the full flow: search, fix, commit
+- **Q-Agent (Quarantined)** (structured output, Anthropic) — sandboxed judge that returns `{"action": "INSERT"|"UPDATE", "merged_content": "..."}`
 
 ## Quick start
 
