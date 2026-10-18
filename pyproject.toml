@@ -20,5 +20,12 @@ dependencies = [
 dev = ["pytest"]
 
 [build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.backends.legacy:build"
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["config*", "memory*"]
+namespaces = true
+
+[tool.setuptools.package-data]
+memory = ["sql/*.sql"]

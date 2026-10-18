@@ -1,7 +1,5 @@
 # cogenial-disco
 
-- /resume memcts
-
 A CI/CD Agentic Memory Remediation System. When a pipeline fails, this framework retrieves past solutions from a vector memory store, attempts automated remediation, and consolidates new solutions into long-term memory — getting smarter with every incident it resolves.
 
 ## How it works
@@ -27,8 +25,8 @@ Two design patterns drive this system:
 - `cue_anchors` — metadata tags for fast filtering (e.g. `["repo:frontend", "stage:build"]`)
 
 **CaMeL** (dual-LLM) — separates concerns between two agents:
-- **P-Agent** (ReAct, Anthropic) — orchestrates the full flow: search, fix, commit
-- **Q-Agent** (structured output, Anthropic) — sandboxed judge that returns `{"action": "INSERT"|"UPDATE", "merged_content": "..."}`
+- **P-Agent (Privileged)** (ReAct, Anthropic) — orchestrates the full flow: search, fix, commit
+- **Q-Agent (Quarantined)** (structured output, Anthropic) — sandboxed judge that returns `{"action": "INSERT"|"UPDATE", "merged_content": "..."}`
 
 ## Quick start
 
