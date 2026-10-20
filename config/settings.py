@@ -19,6 +19,7 @@ class Settings(BaseSettings):
     # Embedding
     EMBEDDING_PROVIDER: str = "local"  # "local" | "openai"
     EMBEDDING_MODEL: str = "all-MiniLM-L6-v2"
+    EMBEDDING_MODEL_REVISION: str | None = None
     EMBEDDING_DIM: int = 384
 
     # Memory tuning

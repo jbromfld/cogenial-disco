@@ -14,7 +14,8 @@ def _get_local_model() -> "SentenceTransformer":
     global _local_model
     if _local_model is None:
         from sentence_transformers import SentenceTransformer
-        _local_model = SentenceTransformer(settings.EMBEDDING_MODEL)
+        _local_model = SentenceTransformer(settings.EMBEDDING_MODEL,
+            **({"revision": settings.EMBEDDING_MODEL_REVISION} if settings.EMBEDDING_MODEL_REVISION else {}))
     return _local_model
 
 
