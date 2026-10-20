@@ -31,7 +31,8 @@ Two design patterns drive this system:
 ## Quick start
 
 ```bash
-pip install -e ".[dev]"
+uv sync --locked --extra dev
+source .venv/bin/activate
 cp .env.example .env        # fill in DB credentials, API keys, model names
 python memory/migrate.py    # creates agent_memory table with correct VECTOR(N) column
 ```
@@ -67,3 +68,18 @@ The agent entrypoints are not yet built. The planned local test harness (from `A
 - **sentence-transformers** — local embeddings (default)
 - **Anthropic Claude** — P-Agent and Q-Agent LLMs (default)
 - **LangSmith** — tracing (opt-in via `.env`)
+
+## Standardized environment
+
+Use CPython **3.13.16** and `uv sync --locked` for this repository. The dependency
+source of truth is `pyproject.toml` plus committed `uv.lock`. Use
+`uv sync --locked --extra dev` when development extras are needed (where defined).
+Shared Ansible provisioning and runtime version checks are documented in [local-agent-environment](../local-agent-environment/README.md).
+Its `.tools/bin/uv` provides the pinned uv version independently of PATH.
+
+Set `EMBEDDING_MODEL_REVISION` to pin the local model's Hugging Face commit.
+Preserve the model and dimension when adopting existing embeddings; changing
+weights requires an explicit re-embedding migration.
+
+Linux ARM64 uses the explicit PyTorch CPU wheel index; CUDA dependencies are
+excluded from this environment. macOS ARM64 uses the regular macOS wheel.

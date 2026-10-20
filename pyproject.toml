@@ -1,12 +1,13 @@
 [project]
 name = "cogenial-disco"
 version = "0.1.0"
-requires-python = ">=3.11"
+requires-python = ">=3.13,<3.14"
 dependencies = [
     "psycopg2-binary",
     "pgvector",
     "pydantic-settings",
     "sentence-transformers",
+    "torch==2.14.1",
     "openai",
     "anthropic",
     "langchain",
@@ -20,7 +21,7 @@ dependencies = [
 dev = ["pytest"]
 
 [build-system]
-requires = ["setuptools>=61"]
+requires = ["setuptools==84.0.0"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
@@ -29,3 +30,22 @@ namespaces = true
 
 [tool.setuptools.package-data]
 memory = ["sql/*.sql"]
+
+[tool.uv]
+environments = [
+    "sys_platform == 'darwin' and platform_machine == 'arm64'",
+    "sys_platform == 'linux' and platform_machine == 'aarch64'",
+]
+required-environments = [
+    "sys_platform == 'darwin' and platform_machine == 'arm64'",
+    "sys_platform == 'linux' and platform_machine == 'aarch64'",
+]
+
+# ARM64 PyPI torch releases can include CUDA; this environment is CPU-only.
+[tool.uv.sources]
+torch = [{ index = "pytorch-cpu", marker = "sys_platform == 'linux'" }]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
